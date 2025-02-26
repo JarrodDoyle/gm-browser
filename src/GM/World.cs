@@ -21,18 +21,18 @@ public class World
         _sectors = new List<List<Vector3>>(sectorCount);
         for (var i = 0; i < sectorCount; i++)
         {
-            var objectCount = reader.ReadInt();
-            sobCount += objectCount;
-            
+            // There seems to be some flags in the first half
+            var objectCount = reader.ReadInt() & 0xFF;
             var objectPositions = new List<Vector3>(objectCount);
             for (var j = 0; j < objectCount; j++)
             {
-                reader.ReadInt(); // Flags
+                reader.ReadFloat(); // idk :) Thought it was flags, but apparently it can be a float lol
                 objectPositions.Add(reader.ReadVector3(importScale));
                 reader.ReadVector3(importScale, 3); // Axis?
             }
             _sectors.Add(objectPositions);
             
+            sobCount += objectCount;
         }
 
         Sobs = new List<Sob>(sobCount);
