@@ -11,12 +11,12 @@ public class MeshSurfaceData
     private readonly List<Vector3> _vertices = new();
     private readonly List<Vector3> _normals = new();
     private readonly List<int> _indices = new();
+    private readonly List<int> _indicesLine = new();
     private readonly List<Vector2> _uvs = new();
     
     // TODO: Guard against empty polygons being added
     public void AddPolygon(
         List<Vector3> vertices,
-        Vector3 normal,
         List<Vector2> uvs)
     {
         Empty = false;
@@ -25,6 +25,9 @@ public class MeshSurfaceData
         var indexOffset = _vertices.Count;
         _vertices.AddRange(vertices);
 
+        var ab = vertices[1] - vertices[0];
+        var bc = vertices[2] - vertices[1];
+        var normal = ab.Cross(bc).Normalized();
         for (var i = 0; i < vertexCount; i++)
         {
             _normals.Add(normal);
@@ -38,16 +41,24 @@ public class MeshSurfaceData
             _indices.Add(indexOffset + j + 1);
         }
 
+        for (var i = 0; i < vertexCount; i++)
+        {
+            _indicesLine.Add(indexOffset + i);
+            _indicesLine.Add(indexOffset + (i + 1) % vertexCount);
+        }
+
         _uvs.AddRange(uvs);
     }
 
-    public GArray BuildSurfaceArray()
+    public GArray BuildSurfaceArray(bool lineMesh = false)
     {
+        var indices = lineMesh ? _indicesLine : _indices;
+        
         var array = new GArray();
         array.Resize((int)Mesh.ArrayType.Max);
         array[(int)Mesh.ArrayType.Vertex] = _vertices.ToArray();
         array[(int)Mesh.ArrayType.Normal] = _normals.ToArray();
-        array[(int)Mesh.ArrayType.Index] = _indices.ToArray();
+        array[(int)Mesh.ArrayType.Index] = indices.ToArray();
         array[(int)Mesh.ArrayType.TexUV] = _uvs.ToArray();
 
         return array;

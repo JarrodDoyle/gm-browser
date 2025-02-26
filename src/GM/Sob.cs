@@ -159,13 +159,11 @@ public partial class Sob : Node3D
 				uvs.Add(new Vector2(u, v));
 			}
 			
-			var normal = (vs[1] - vs[0]).Cross(vs[2] - vs[1]).Normalized();
-			
 			if (!surfaceDataMap.ContainsKey(poly.TextureName))
 			{
 				surfaceDataMap.Add(poly.TextureName, new MeshSurfaceData());
 			}
-			surfaceDataMap[poly.TextureName].AddPolygon(vs, normal, uvs);
+			surfaceDataMap[poly.TextureName].AddPolygon(vs, uvs);
 		}
 
 		
@@ -175,9 +173,14 @@ public partial class Sob : Node3D
 			GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
 		}
 		GD.Print("]");
+
+		var lineMeshMaterial = new StandardMaterial3D();
+		lineMeshMaterial.RenderPriority = 1;
 		
 		// TODO: Can we just do a fan? Need to check if FSDS allows concave polys
+		// TODO: Linemesh only needs one set of surface data
 		var mesh = new ArrayMesh();
+		var lineMesh = new ArrayMesh();
 		foreach (var (textureName, surfaceData) in surfaceDataMap)
 		{
 			var material = new StandardMaterial3D
@@ -189,10 +192,16 @@ public partial class Sob : Node3D
 			var surfaceIdx = mesh.GetSurfaceCount();
 			mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, array);
 			mesh.SurfaceSetMaterial(surfaceIdx, material);
+			
+			var lineArray = surfaceData.BuildSurfaceArray(true);
+			lineMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Lines, lineArray);
+			lineMesh.SurfaceSetMaterial(surfaceIdx, lineMeshMaterial);
 		}
 		
 		var meshInstance = new MeshInstance3D { Mesh = mesh, Position = Vector3.Zero };
+		var lineMeshInstance = new MeshInstance3D { Mesh = lineMesh, Position = Vector3.Zero };
 		AddChild(meshInstance);
+		AddChild(lineMeshInstance);
 	}
 
 	private static int ReadInt(Queue<string> tokens)
