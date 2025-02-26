@@ -5,6 +5,13 @@ namespace GM;
 
 public struct Polygon
 {
+	public enum RenderMode
+	{
+		Normal,
+		Sector,
+		Hole,
+	}
+	
     public bool CenterAnchor;
     public int Brightness;
     public int VertexCount;
@@ -15,6 +22,7 @@ public struct Polygon
     public Vector3 UVec;
     public Vector3 VVec;
     public string TextureName;
+    public RenderMode Mode;
 
     public override string ToString()
     {
@@ -60,7 +68,9 @@ public class Sob
             var uvec = reader.ReadVector3(65536.0f);
             var vvec = reader.ReadVector3(65536.0f);
             var lmuv = reader.ReadVector2(128.0f);
-            reader.ReadString(4);
+            reader.ReadString(1);
+            var mode = (Polygon.RenderMode)reader.ReadInt();
+            reader.ReadString(2);
 			
             Polygons.Add(new Polygon {
                 CenterAnchor = anchorMode == "0",
@@ -73,6 +83,7 @@ public class Sob
                 UVec = uvec,
                 VVec = vvec,
                 TextureName = textureName,
+                Mode = mode,
             });
         }
 
@@ -91,6 +102,11 @@ public class Sob
     {
         foreach (var poly in Polygons)
         {
+	        if (poly.Mode != Polygon.RenderMode.Normal || poly.TextureName == "none")
+	        {
+		        continue;
+	        }
+	        
         	var vs = new List<Vector3>(poly.VertexCount);
         	var uvs = new List<Vector2>(poly.VertexCount);
 	        for (var i = 0; i < poly.VertexCount; i++)
