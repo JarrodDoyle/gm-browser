@@ -102,6 +102,8 @@ public class Sob
     {
         foreach (var poly in Polygons)
         {
+	        // TODO: I think we need to load the Alt texture name too, and compare that to none.
+			// Things like the water in level11 are probably Sector with Water as alt texture
 	        if (poly.Mode != Polygon.RenderMode.Normal || poly.TextureName == "none")
 	        {
 		        continue;
@@ -114,10 +116,6 @@ public class Sob
 		        var idx = flip ? (poly.VertexCount - 1 - i) : i;
 		        vs.Add(Vertices[poly.Indices[idx]] + offset);
 	        }
-        	// foreach (var i in poly.Indices)
-        	// {
-        	// 	vs.Add(Vertices[i] + offset);
-        	// }
 
         	var anchor = vs[0];
         	if (poly.CenterAnchor)
