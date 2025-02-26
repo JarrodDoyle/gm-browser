@@ -43,7 +43,7 @@ public class World
     }
 
     public void AddToMesh(
-        Dictionary<string, ImageTexture> textures,
+        TextureManager textureManager,
         Dictionary<string, MeshSurfaceData> surfaceDataMap)
     {
         var sobOffset = 0;
@@ -52,7 +52,7 @@ public class World
             for (var i = 0; i < sector.Count; i++)
             {
                 var offset = sector[i];
-                Sobs[sobOffset].AddToMesh(textures, surfaceDataMap, offset, i == 0);
+                Sobs[sobOffset].AddToMesh(textureManager, surfaceDataMap, offset, i == 0);
                 sobOffset++;
             }
         }

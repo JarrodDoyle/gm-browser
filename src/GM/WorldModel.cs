@@ -30,52 +30,28 @@ public partial class WorldModel : Node3D
         var path = GetWorldPath();
         var reader = new TokenReader(path);
         _world = new World(reader, ImportScale);
-        
-        var textures = new Dictionary<string, ImageTexture>();
+
+        var textureManager = new TextureManager(GameDir);
         foreach (var sob in _world.Sobs)
         {
             foreach (var textureName in sob.Textures)
             {
-                if (textures.ContainsKey(textureName))
-                {
-                    continue;
-                }
-                
-                var dir = $"{GameDir}/Pics/";
-                var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-                var paths = Directory.GetFiles(dir, $"{textureName}.bmp", options);
-                if (!paths.IsEmpty())
-                {
-                    var image = Image.LoadFromFile(paths[0]);
-                    var texture = ImageTexture.CreateFromImage(image);
-                    textures.Add(textureName, texture);
-                }
-                else
+                if (!textureManager.LoadTexture(textureName))
                 {
                     GD.Print($"Failed to find texture: {textureName}");
-                    textures.Add(textureName, ImageTexture.CreateFromImage(Image.CreateEmpty(256, 256, false, Image.Format.Rgb8)));
                 }
             }
         }
         
-        GD.Print("Textures: [");
-        foreach (var (name, texture) in textures)
-        {
-            GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
-        }
-        GD.Print("]");
+        textureManager.LogTextures();
         
         var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
-        _world.AddToMesh(textures, surfaceDataMap);
+        _world.AddToMesh(textureManager, surfaceDataMap);
         
         var mesh = new ArrayMesh();
         foreach (var (textureName, surfaceData) in surfaceDataMap)
         {
-            var material = new StandardMaterial3D
-            {
-                AlbedoTexture = textures[textureName],
-                TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
-            };
+            var material = textureManager.Materials[textureName];
             var array = surfaceData.BuildSurfaceArray();
             var surfaceIdx = mesh.GetSurfaceCount();
             mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, array);

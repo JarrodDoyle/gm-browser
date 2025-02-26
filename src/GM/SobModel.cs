@@ -34,34 +34,19 @@ public partial class SobModel : Node3D
 		// TODO: Add string override to Sob?
 		// GD.Print($"Vertex count: {vertexCount}\nPoly count: {polyCount}\nVertices: [\n  {string.Join("\n  ", vertices)}\n]\nPolys: [\n  {string.Join("\n  ", polys)}\n]");
 
-		var textures = new Dictionary<string, ImageTexture>();
+		var textureManager = new TextureManager(GameDir);
 		foreach (var textureName in _sob.Textures)
 		{
-			var dir = $"{GameDir}/Pics/";
-			var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-			var paths = Directory.GetFiles(dir, $"{textureName}.bmp", options);
-			if (!paths.IsEmpty())
-			{
-				var image = Image.LoadFromFile(paths[0]);
-				var texture = ImageTexture.CreateFromImage(image);
-				textures.Add(textureName, texture);
-			}
-			else
+			if (!textureManager.LoadTexture(textureName))
 			{
 				GD.Print($"Failed to find texture: {textureName}");
-				textures.Add(textureName, ImageTexture.CreateFromImage(Image.CreateEmpty(256, 256, false, Image.Format.Rgb8)));
 			}
 		}
 		
-		GD.Print("Textures: [");
-		foreach (var (name, texture) in textures)
-		{
-			GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
-		}
-		GD.Print("]");
+		textureManager.LogTextures();
 		
 		var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
-		_sob.AddToMesh(textures, surfaceDataMap, Vector3.Zero);
+		_sob.AddToMesh(textureManager, surfaceDataMap, Vector3.Zero);
 
 		var lineMeshMaterial = new StandardMaterial3D();
 		lineMeshMaterial.RenderPriority = 1;
@@ -72,11 +57,7 @@ public partial class SobModel : Node3D
 		var lineMesh = new ArrayMesh();
 		foreach (var (textureName, surfaceData) in surfaceDataMap)
 		{
-			var material = new StandardMaterial3D
-			{
-				AlbedoTexture = textures[textureName],
-				TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
-			};
+			var material = textureManager.Materials[textureName];
 			var array = surfaceData.BuildSurfaceArray();
 			var surfaceIdx = mesh.GetSurfaceCount();
 			mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, array);

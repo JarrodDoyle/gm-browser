@@ -95,7 +95,7 @@ public class Sob
     }
 
     public void AddToMesh(
-	    Dictionary<string, ImageTexture> textures,
+	    TextureManager textureManager,
 	    Dictionary<string, MeshSurfaceData> surfaceDataMap,
 	    Vector3 offset,
 	    bool flip = false)
@@ -133,7 +133,7 @@ public class Sob
         		anchor = (min + max) / 2.0f;
         	}
 
-        	var txSize = textures[poly.TextureName].GetSize();
+        	var txSize = textureManager.Textures[poly.TextureName].GetSize();
         	var scale = poly.AltUvMode ? 0.5f : 1.0f;
         	var uvOffset = new Vector2(poly.Uv.Y, poly.Uv.X) * scale;
         	
