@@ -59,7 +59,7 @@ public partial class ObjectSelector: Control
             child.QueueFree();
         }
 
-        var sob = new Sob();
+        var sob = new SobModel();
         sob.GameDir = _GameDir;
         sob.ObjectName = objectName;
         

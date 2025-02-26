@@ -1,13 +1,11 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace GM;
 
 [GlobalClass]
-public partial class Sob : Node3D
+public partial class SobModel : Node3D
 {
 	[Export(PropertyHint.GlobalDir)]
 	public string GameDir { get; set; }
