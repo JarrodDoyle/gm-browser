@@ -53,76 +53,15 @@ public partial class SobModel : Node3D
 			}
 		}
 		
-		var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
-		foreach (var poly in _sob.Polygons)
-		{
-			if (!textures.ContainsKey(poly.TextureName))
-			{
-				var dir = $"{GameDir}/Pics/";
-				var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-				var paths = Directory.GetFiles(dir, $"{poly.TextureName}.bmp", options);
-				if (!paths.IsEmpty())
-				{
-					var image = Image.LoadFromFile(paths[0]);
-					var texture = ImageTexture.CreateFromImage(image);
-					textures.Add(poly.TextureName, texture);
-				}
-				else
-				{
-					GD.Print($"Failed to find texture: {poly.TextureName}");
-					textures.Add(poly.TextureName, ImageTexture.CreateFromImage(Image.CreateEmpty(256, 256, false, Image.Format.Rgb8)));
-				}
-			}
-			
-			var vs = new List<Vector3>(poly.VertexCount);
-			var uvs = new List<Vector2>(poly.VertexCount);
-			foreach (var i in poly.Indices)
-			{
-				vs.Add(_sob.Vertices[i]);
-			}
-
-			var anchor = vs[0];
-			if (poly.CenterAnchor)
-			{
-				var min = vs[0];
-				var max = vs[0];
-				foreach (var v in vs)
-				{
-					min = min.Min(v);
-					max = max.Max(v);
-				}
-
-				anchor = (min + max) / 2.0f;
-			}
-
-			var txSize = textures[poly.TextureName].GetSize();
-			var scale = poly.AltUvMode ? 0.5f : 1.0f;
-			var uvOffset = new Vector2(poly.Uv.Y, poly.Uv.X) * scale;
-			
-			foreach (var p in vs)
-			{
-				var delta = ImportScale * (p - anchor);
-
-				var u = (delta.Dot(poly.VVec) + uvOffset.X) / txSize.X;
-				var v = (delta.Dot(poly.UVec) + uvOffset.Y) / txSize.Y;
-				
-				uvs.Add(new Vector2(u, v));
-			}
-			
-			if (!surfaceDataMap.ContainsKey(poly.TextureName))
-			{
-				surfaceDataMap.Add(poly.TextureName, new MeshSurfaceData());
-			}
-			surfaceDataMap[poly.TextureName].AddPolygon(vs, uvs);
-		}
-
-		
 		GD.Print("Textures: [");
 		foreach (var (name, texture) in textures)
 		{
 			GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
 		}
 		GD.Print("]");
+		
+		var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
+		_sob.AddToMesh(textures, surfaceDataMap);
 
 		var lineMeshMaterial = new StandardMaterial3D();
 		lineMeshMaterial.RenderPriority = 1;

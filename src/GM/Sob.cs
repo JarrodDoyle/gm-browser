@@ -82,4 +82,53 @@ public class Sob
             Textures.Add(poly.TextureName);
         }
     }
+
+    public void AddToMesh(
+	    Dictionary<string, ImageTexture> textures,
+	    Dictionary<string, MeshSurfaceData> surfaceDataMap)
+    {
+        foreach (var poly in Polygons)
+        {
+        	var vs = new List<Vector3>(poly.VertexCount);
+        	var uvs = new List<Vector2>(poly.VertexCount);
+        	foreach (var i in poly.Indices)
+        	{
+        		vs.Add(Vertices[i]);
+        	}
+
+        	var anchor = vs[0];
+        	if (poly.CenterAnchor)
+        	{
+        		var min = vs[0];
+        		var max = vs[0];
+        		foreach (var v in vs)
+        		{
+        			min = min.Min(v);
+        			max = max.Max(v);
+        		}
+
+        		anchor = (min + max) / 2.0f;
+        	}
+
+        	var txSize = textures[poly.TextureName].GetSize();
+        	var scale = poly.AltUvMode ? 0.5f : 1.0f;
+        	var uvOffset = new Vector2(poly.Uv.Y, poly.Uv.X) * scale;
+        	
+        	foreach (var p in vs)
+        	{
+        		var delta = ImportScale * (p - anchor);
+
+        		var u = (delta.Dot(poly.VVec) + uvOffset.X) / txSize.X;
+        		var v = (delta.Dot(poly.UVec) + uvOffset.Y) / txSize.Y;
+        		
+        		uvs.Add(new Vector2(u, v));
+        	}
+        	
+        	if (!surfaceDataMap.ContainsKey(poly.TextureName))
+        	{
+        		surfaceDataMap.Add(poly.TextureName, new MeshSurfaceData());
+        	}
+        	surfaceDataMap[poly.TextureName].AddPolygon(vs, uvs);
+        }
+    }
 }
