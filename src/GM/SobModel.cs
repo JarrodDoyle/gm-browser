@@ -92,45 +92,4 @@ public partial class SobModel : Node3D
 		AddChild(meshInstance);
 		AddChild(lineMeshInstance);
 	}
-
-	private static int ReadInt(Queue<string> tokens)
-	{
-		return int.Parse(tokens.Dequeue());
-	}
-	
-	private static List<int> ReadInt(Queue<string> tokens, int count)
-	{
-		var values = new List<int>(count);
-		for (var i = 0; i < count; i++)
-		{
-			values.Add(ReadInt(tokens));
-		}
-		return values;
-	}
-
-	private static float ReadFloat(Queue<string> tokens)
-	{
-		return float.Parse(tokens.Dequeue());
-	}
-	
-	private static Vector3 ReadVector3(Queue<string> tokens, float scale)
-	{
-		var x = ReadFloat(tokens);
-		var y = ReadFloat(tokens);
-		var z = ReadFloat(tokens);
-		return new Vector3(y, z, x) / scale;
-	}
-
-	private static string ReadString(Queue<string> tokens)
-	{
-		return tokens.Dequeue();
-	}
-
-	private static void ReadSkip(Queue<string> tokens, int count)
-	{
-		for (var i = 0; i < count; i++)
-		{
-			tokens.Dequeue();
-		}
-	}
 }
