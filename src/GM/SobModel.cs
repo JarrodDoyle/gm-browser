@@ -14,25 +14,8 @@ public partial class SobModel : Node3D
 	public string ObjectName { get; set; }
 
 	[Export] public float ImportScale { get; set; } = 64.0f;
-	
-	public struct Polygon
-	{
-		public bool CenterAnchor;
-		public int Brightness;
-		public int VertexCount;
-		public List<int> Indices;
-		public bool AltUvMode;
-		public Vector2 Uv;
-		public Vector2 LmUv;
-		public Vector3 UVec;
-		public Vector3 VVec;
-		public string TextureName;
 
-		public override string ToString()
-		{
-			return $"Poly(CenterAnchor: {CenterAnchor}, Flags: {Brightness}, VertexCount: {VertexCount}, Indices: [{string.Join(", ", Indices)}], UV: {Uv}, Lightmap UV: {LmUv}, TexU Axis: {UVec}, TexV Axis: {VVec}, Texture: {TextureName})";
-		}
-	}
+	private Sob _sob;
 
 	private string GetObjectPath()
 	{
@@ -45,64 +28,33 @@ public partial class SobModel : Node3D
 	public override void _Ready()
 	{
 		var path = GetObjectPath();
-		var tokensList = new List<string>();
-		foreach (var line in File.ReadAllLines(path))
-		{
-			tokensList.AddRange(line.Split(' '));
-		}
+		var reader = new TokenReader(path);
+		_sob = new Sob(reader, ImportScale);
 
-		tokensList.RemoveAll(string.IsNullOrEmpty);
-
-		GD.Print($"[{string.Join(", ", tokensList)}]");
-
-		var tokens = new Queue<string>(tokensList);
-		var vertexCount = ReadInt(tokens);
-		var polyCount = ReadInt(tokens);
-		var vertices = new List<Vector3>(vertexCount);
-		for (var i = 0; i < vertexCount; i++)
-		{
-			vertices.Add(ReadVector3(tokens, ImportScale));
-		}
-		
-		var polys = new List<Polygon>(polyCount);
-		for (var i = 0; i < polyCount; i++)
-		{
-			var textureName = ReadString(tokens);
-			ReadSkip(tokens, 1);
-			var anchorMode = ReadString(tokens);
-			ReadSkip(tokens, 5);
-			var brightness = ReadInt(tokens);
-			var vCount = ReadInt(tokens);
-			var indices = ReadInt(tokens, vCount);
-			var uv0 = ReadInt(tokens);
-			var uv1 = ReadInt(tokens);
-			var uv2 = ReadInt(tokens);
-			var uv = (uv0 == -1 ? new Vector2(uv1, uv2) : new Vector2(uv1, uv0)) / 128.0f;
-			var altUvMode = uv0 == -1;
-			var uvec = ReadVector3(tokens, 65536.0f);
-			var vvec = ReadVector3(tokens, 65536.0f);
-			var lmuv = new Vector2(ReadInt(tokens), ReadInt(tokens)) / 128.0f;
-			ReadSkip(tokens, 4);
-			
-			polys.Add(new Polygon {
-				CenterAnchor = anchorMode == "0",
-				Brightness = brightness,
-				VertexCount = vCount,
-				Indices = indices,
-				AltUvMode = altUvMode,
-				Uv = uv,
-				LmUv = lmuv,
-				UVec = uvec,
-				VVec = vvec,
-				TextureName = textureName,
-			});
-		}
-		
-		GD.Print($"Vertex count: {vertexCount}\nPoly count: {polyCount}\nVertices: [\n  {string.Join("\n  ", vertices)}\n]\nPolys: [\n  {string.Join("\n  ", polys)}\n]");
+		// TODO: Add string override to Sob?
+		// GD.Print($"Vertex count: {vertexCount}\nPoly count: {polyCount}\nVertices: [\n  {string.Join("\n  ", vertices)}\n]\nPolys: [\n  {string.Join("\n  ", polys)}\n]");
 
 		var textures = new Dictionary<string, ImageTexture>();
+		foreach (var textureName in _sob.Textures)
+		{
+			var dir = $"{GameDir}/Pics/";
+			var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
+			var paths = Directory.GetFiles(dir, $"{textureName}.bmp", options);
+			if (!paths.IsEmpty())
+			{
+				var image = Image.LoadFromFile(paths[0]);
+				var texture = ImageTexture.CreateFromImage(image);
+				textures.Add(textureName, texture);
+			}
+			else
+			{
+				GD.Print($"Failed to find texture: {textureName}");
+				textures.Add(textureName, ImageTexture.CreateFromImage(Image.CreateEmpty(256, 256, false, Image.Format.Rgb8)));
+			}
+		}
+		
 		var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
-		foreach (var poly in polys)
+		foreach (var poly in _sob.Polygons)
 		{
 			if (!textures.ContainsKey(poly.TextureName))
 			{
@@ -126,7 +78,7 @@ public partial class SobModel : Node3D
 			var uvs = new List<Vector2>(poly.VertexCount);
 			foreach (var i in poly.Indices)
 			{
-				vs.Add(vertices[i]);
+				vs.Add(_sob.Vertices[i]);
 			}
 
 			var anchor = vs[0];
