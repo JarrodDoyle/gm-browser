@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://bm57dj3vxxijm"]
+
+[ext_resource type="Script" path="res://src/camera.gd" id="1_xc4gm"]
+[ext_resource type="Script" path="res://src/GM/Sob.cs" id="2_u6wk2"]
+[ext_resource type="Script" path="res://src/GM/UI/ObjectSelector.cs" id="3_d5lq4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_036as"]
+
+[sub_resource type="Sky" id="Sky_6g457"]
+sky_material = SubResource("ProceduralSkyMaterial_036as")
+
+[sub_resource type="Environment" id="Environment_t22r8"]
+background_mode = 2
+sky = SubResource("Sky_6g457")
+ambient_light_source = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_emfur"]
+font_size = 20
+
+[node name="Node" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_t22r8")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+script = ExtResource("1_xc4gm")
+
+[node name="ObjectManager" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="GM Object" type="Node3D" parent="ObjectManager"]
+visible = false
+script = ExtResource("2_u6wk2")
+GameDir = "/stuff/Games/gun-metal/drive_c/gm/GUNMETAL/"
+ObjectName = "_jaybox2"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ObjectPicker" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("3_d5lq4")
+
+[node name="FolderSelect" type="FileDialog" parent="CanvasLayer/ObjectPicker"]
+unique_name_in_owner = true
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(534, 180)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ObjectPicker"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 134.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ObjectPicker/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Objects"
+label_settings = SubResource("LabelSettings_emfur")
+horizontal_alignment = 1
+
+[node name="Folder" type="HBoxContainer" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FolderPath" type="LineEdit" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer/VBoxContainer/Folder"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrowseButton" type="Button" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer/VBoxContainer/Folder"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Browse"
+
+[node name="ObjectList" type="ItemList" parent="CanvasLayer/ObjectPicker/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
