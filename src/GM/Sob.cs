@@ -85,16 +85,23 @@ public class Sob
 
     public void AddToMesh(
 	    Dictionary<string, ImageTexture> textures,
-	    Dictionary<string, MeshSurfaceData> surfaceDataMap)
+	    Dictionary<string, MeshSurfaceData> surfaceDataMap,
+	    Vector3 offset,
+	    bool flip = false)
     {
         foreach (var poly in Polygons)
         {
         	var vs = new List<Vector3>(poly.VertexCount);
         	var uvs = new List<Vector2>(poly.VertexCount);
-        	foreach (var i in poly.Indices)
-        	{
-        		vs.Add(Vertices[i]);
-        	}
+	        for (var i = 0; i < poly.VertexCount; i++)
+	        {
+		        var idx = flip ? (poly.VertexCount - 1 - i) : i;
+		        vs.Add(Vertices[poly.Indices[idx]] + offset);
+	        }
+        	// foreach (var i in poly.Indices)
+        	// {
+        	// 	vs.Add(Vertices[i] + offset);
+        	// }
 
         	var anchor = vs[0];
         	if (poly.CenterAnchor)

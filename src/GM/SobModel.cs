@@ -61,7 +61,7 @@ public partial class SobModel : Node3D
 		GD.Print("]");
 		
 		var surfaceDataMap = new Dictionary<string, MeshSurfaceData>();
-		_sob.AddToMesh(textures, surfaceDataMap);
+		_sob.AddToMesh(textures, surfaceDataMap, Vector3.Zero);
 
 		var lineMeshMaterial = new StandardMaterial3D();
 		lineMeshMaterial.RenderPriority = 1;

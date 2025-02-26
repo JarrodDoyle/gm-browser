@@ -64,6 +64,16 @@ public class TokenReader
         var z = ReadFloat();
         return new Vector3(y, z, x) / scale;
     }
+    
+    public List<Vector3> ReadVector3(float scale, int count)
+    {
+        var values = new List<Vector3>(count);
+        for (var i = 0; i < count; i++)
+        {
+            values.Add(ReadVector3(scale));
+        }
+        return values;
+    }
 
     public string ReadString()
     {
