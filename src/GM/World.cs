@@ -10,7 +10,7 @@ public struct Sector
 
 public class World
 {
-    private List<List<Vector3>> _sectors;
+    public List<List<Vector3>> Sectors;
     public List<Sob> Sobs { get; }
     
     public World(TokenReader reader, float importScale)
@@ -18,7 +18,7 @@ public class World
         var sectorCount = reader.ReadInt();
 
         var sobCount = 0;
-        _sectors = new List<List<Vector3>>(sectorCount);
+        Sectors = new List<List<Vector3>>(sectorCount);
         for (var i = 0; i < sectorCount; i++)
         {
             // There seems to be some flags in the first half
@@ -30,7 +30,7 @@ public class World
                 objectPositions.Add(reader.ReadVector3(importScale));
                 reader.ReadVector3(importScale, 3); // Axis?
             }
-            _sectors.Add(objectPositions);
+            Sectors.Add(objectPositions);
             
             sobCount += objectCount;
         }
@@ -47,7 +47,7 @@ public class World
         Dictionary<string, MeshSurfaceData> surfaceDataMap)
     {
         var sobOffset = 0;
-        foreach (var sector in _sectors)
+        foreach (var sector in Sectors)
         {
             for (var i = 0; i < sector.Count; i++)
             {
