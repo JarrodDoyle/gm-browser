@@ -29,7 +29,7 @@ public partial class SobModel : Node3D
 	{
 		var path = GetObjectPath();
 		var reader = new TokenReader(path);
-		_sob = new Sob(reader, ImportScale);
+		_sob = ObjectParser.Read(reader, ImportScale);
 
 		// TODO: Add string override to Sob?
 		// GD.Print($"Vertex count: {vertexCount}\nPoly count: {polyCount}\nVertices: [\n  {string.Join("\n  ", vertices)}\n]\nPolys: [\n  {string.Join("\n  ", polys)}\n]");

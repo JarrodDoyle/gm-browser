@@ -34,7 +34,7 @@ namespace GM;
     {
         var path = GetWorldPath();
         var reader = new TokenReader(path);
-        _world = new World(reader, ImportScale);
+        _world = WorldParser.Read(reader, ImportScale);
 
         _textureManager = new TextureManager(GameDir);
         foreach (var sob in _world.Sobs)
@@ -61,18 +61,46 @@ namespace GM;
         AddChild(_edgeRenderer);
 
         _objectSelector = new ObjectSelector();
-        // _objectSelector.SelectedObject += ModifySelectedPoly;
+        _objectSelector.SelectedObject += ModifySelectedPoly;
         _objectSelector.SelectedObject += (_) => _edgeRenderer.Redraw = true;
         AddChild(_objectSelector);
     }
+    
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventKey { Pressed: true } keyEvent)
+        {
+            if (keyEvent.Keycode == Key.T)
+            {
+                var writer = new TokenWriter();
+                WorldParser.Write(writer, _world);
+                
+                var path = GetWorldPath();
+                GD.Print($"Saving: {path}");
+                writer.Save(GetWorldPath());
+            }
+        }
+    }
 
-    // private void ModifySelectedPoly(Selection selection)
-    // {
-    //     GD.Print("Ooh we modding it");
-    //     var poly = _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId];
-    //     poly.Uv += new Vector2(8, 8);
-    //
-    //     _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId] = poly;
-    //     _worldRenderer.Rebuild(_textureManager);
-    // }
+    private void ModifySelectedPoly(Selection selection)
+    {
+        var poly = _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId];
+        poly.Uv += new Vector2(8, 8);
+        _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId] = poly;
+        
+        var objectNodes = GetTree().GetNodesInGroup(NodeGroups.Objects);
+        foreach (var node in objectNodes)
+        {
+            if (node is not ObjectRenderer objectRenderer)
+            {
+                continue;
+            }
+            
+            if (objectRenderer.SectorId == selection.SectorId
+                && objectRenderer.ObjectId == selection.ObjectId)
+            {
+                objectRenderer.Rebuild(_textureManager, _world);
+            }
+        }
+    }
 }
