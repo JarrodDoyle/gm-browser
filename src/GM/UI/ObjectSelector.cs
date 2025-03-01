@@ -1,3 +1,4 @@
+using GM.Render;
 using Godot;
 
 namespace GM.UI;
@@ -59,17 +60,17 @@ public partial class ObjectSelector: Node3D
         
         var collider = (Node)result["collider"] as StaticBody3D;
         var faceIdx = result["face_index"].AsInt32();
-        if (collider == null)
+
+        // This sucks, but for now it's fine...
+        if (collider?.GetParent().GetParent() is not ObjectRenderer objectRenderer)
         {
             return;
         }
-
-        // This sucks, but for now it's fine...
-        var gmObject = collider.GetParent().GetParent();
-        var sectorIdx = gmObject.GetMeta("sectorId").AsInt32();
-        var objectIdx = gmObject.GetMeta("objectId").AsInt32();
-        var globalObjectIdx = gmObject.GetMeta("globalObjectId").AsInt32();
-        var polyIdx = gmObject.GetMeta("triPolyMap").AsInt32Array()[faceIdx];
+        
+        var sectorIdx = objectRenderer.SectorId;
+        var objectIdx = objectRenderer.ObjectId;
+        var globalObjectIdx = objectRenderer.GlobalObjectId;
+        var polyIdx = objectRenderer.TriPolyMap[faceIdx];
         
         GD.Print($"Sector: {sectorIdx}, Object: {objectIdx}, Poly: {polyIdx}");
         
@@ -77,7 +78,7 @@ public partial class ObjectSelector: Node3D
         {
             node.RemoveFromGroup(NodeGroups.Selected);
         }
-        gmObject.AddToGroup(NodeGroups.Selected);
+        objectRenderer.AddToGroup(NodeGroups.Selected);
 
         SelectedObject?.Invoke(new Selection(sectorIdx, objectIdx, globalObjectIdx, polyIdx));
     }

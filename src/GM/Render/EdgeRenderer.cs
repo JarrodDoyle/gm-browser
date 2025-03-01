@@ -38,11 +38,16 @@ public partial class EdgeRenderer: Node3D
         var objectNodes = GetTree().GetNodesInGroup(NodeGroups.Objects);
         foreach (var node in objectNodes)
         {
-            var sectorId = node.GetMeta("sectorId").AsInt32();
-            var objectId = node.GetMeta("objectId").AsInt32();
-            var globalObjectId = node.GetMeta("globalObjectId").AsInt32();
+            if (node is not ObjectRenderer objectRenderer)
+            {
+                continue;
+            }
+            
+            var sectorId = objectRenderer.SectorId;
+            var objectId = objectRenderer.ObjectId;
+            var globalObjectId = objectRenderer.GlobalObjectId;
 
-            var lines = node.IsInGroup(NodeGroups.Selected) ? selectedLines : genericLines;
+            var lines = objectRenderer.IsInGroup(NodeGroups.Selected) ? selectedLines : genericLines;
             AddLines(lines, cameraPos, sectorId, objectId, globalObjectId);
         }
         
