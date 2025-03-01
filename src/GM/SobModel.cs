@@ -5,7 +5,6 @@ using GM.IO;
 
 namespace GM;
 
-[GlobalClass]
 public partial class SobModel : Node3D
 {
 	[Export(PropertyHint.GlobalDir)]

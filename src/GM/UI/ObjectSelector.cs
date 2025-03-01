@@ -1,68 +1,84 @@
-using System.IO;
-using System.Linq;
 using Godot;
 
 namespace GM.UI;
 
-public partial class ObjectSelector: Control
+public readonly struct Selection
 {
-    private Node3D _ObjectManager;
-    
-    private FileDialog _FolderSelect;
-    private LineEdit _FolderPath;
-    private Button _BrowseButton;
-    private ItemList _Objects;
+    public readonly int SectorId;
+    public readonly int ObjectId;
+    public readonly int GlobalObjectId;
+    public readonly int PolyId;
 
-    private string _GameDir;
-    
-    public override void _Ready()
+    public Selection(int sectorId, int objectId, int globalObjectId, int polyId)
     {
-        _ObjectManager = GetNode<Node3D>("%ObjectManager");
-        
-        // TODO: Load initial folderpath from config and prefil everything
-        _FolderSelect = GetNode<FileDialog>("%FolderSelect");
-        _FolderPath = GetNode<LineEdit>("%FolderPath");
-        _BrowseButton = GetNode<Button>("%BrowseButton");
-        _Objects = GetNode<ItemList>("%ObjectList");
-
-        _BrowseButton.Pressed += () => _FolderSelect.Visible = true;
-        _FolderSelect.DirSelected += SetGameDir;
-        _FolderPath.TextSubmitted += SetGameDir;
-        _Objects.ItemSelected += InitObject;
+        SectorId = sectorId;
+        ObjectId = objectId;
+        GlobalObjectId = globalObjectId;
+        PolyId = polyId;
     }
+}
 
-    private void SetGameDir(string path)
+public partial class ObjectSelector: Node3D
+{
+    public delegate void SelectedObjectEventHandler(Selection selection);
+    public event SelectedObjectEventHandler SelectedObject;
+    
+    private bool _selectObject;
+    private Vector2 _selectPosition;
+    
+    private const float RayLength = 1000.0f;
+    public override void _Input(InputEvent @event)
     {
-        _FolderPath.Text = path;
-        _FolderSelect.CurrentDir = path;
-        _GameDir = path;
-        
-        _Objects.Clear();
-        var dir = $"{_GameDir}/SOBS/";
-        var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-        var paths = Directory.GetFiles(dir, $"*.sob", options).ToList();
-        paths.Sort();
-        foreach (var objectPath in paths)
+        if (@event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } eventMouseButton)
         {
-            var name = Path.GetFileNameWithoutExtension(objectPath);
-            _Objects.AddItem(name);
+            _selectObject = true;
+            _selectPosition = eventMouseButton.Position;
         }
     }
-
-    private void InitObject(long idx)
+    
+    public override void _PhysicsProcess(double delta)
     {
-        _Objects.ReleaseFocus();
-        
-        var objectName = _Objects.GetItemText((int)idx);
-        foreach (var child in _ObjectManager.GetChildren())
+        if (!_selectObject)
         {
-            child.QueueFree();
+            return;
+        }
+    
+        _selectObject = false;
+        
+        var spaceState = GetWorld3D().DirectSpaceState;
+        var camera3D = GetViewport().GetCamera3D();
+        var from = camera3D.ProjectRayOrigin(_selectPosition);
+        var to = from + camera3D.ProjectRayNormal(_selectPosition) * RayLength;
+    
+        var query = PhysicsRayQueryParameters3D.Create(from, to);
+        var result = spaceState.IntersectRay(query);
+        if (result.Count == 0)
+        {
+            return;
+        }
+        
+        var collider = (Node)result["collider"] as StaticBody3D;
+        var faceIdx = result["face_index"].AsInt32();
+        if (collider == null)
+        {
+            return;
         }
 
-        var sob = new SobModel();
-        sob.GameDir = _GameDir;
-        sob.ObjectName = objectName;
+        // This sucks, but for now it's fine...
+        var gmObject = collider.GetParent().GetParent();
+        var sectorIdx = gmObject.GetMeta("sectorId").AsInt32();
+        var objectIdx = gmObject.GetMeta("objectId").AsInt32();
+        var globalObjectIdx = gmObject.GetMeta("globalObjectId").AsInt32();
+        var polyIdx = gmObject.GetMeta("triPolyMap").AsInt32Array()[faceIdx];
         
-        _ObjectManager.AddChild(sob);
+        GD.Print($"Sector: {sectorIdx}, Object: {objectIdx}, Poly: {polyIdx}");
+        
+        foreach (var node in GetTree().GetNodesInGroup(NodeGroups.Selected))
+        {
+            node.RemoveFromGroup(NodeGroups.Selected);
+        }
+        gmObject.AddToGroup(NodeGroups.Selected);
+
+        SelectedObject?.Invoke(new Selection(sectorIdx, objectIdx, globalObjectIdx, polyIdx));
     }
 }

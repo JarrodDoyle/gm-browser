@@ -18,3 +18,7 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="gm_editor"
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2

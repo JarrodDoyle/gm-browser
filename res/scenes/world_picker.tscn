@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5iu5g4mkh8ip"]
 
-[ext_resource type="Script" path="res://src/GM/UI/WorldSelector.cs" id="1_5c1ew"]
+[ext_resource type="Script" path="res://src/GM/UI/WorldBrowser.cs" id="1_xujo6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_emfur"]
 font_size = 20
@@ -10,7 +10,7 @@ layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
-script = ExtResource("1_5c1ew")
+script = ExtResource("1_xujo6")
 
 [node name="FolderSelect" type="FileDialog" parent="."]
 unique_name_in_owner = true

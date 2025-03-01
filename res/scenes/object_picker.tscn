@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cnootuwrgepg6"]
 
-[ext_resource type="Script" path="res://src/GM/UI/ObjectSelector.cs" id="1_myfwx"]
+[ext_resource type="Script" path="res://src/GM/UI/ObjectBrowser.cs" id="1_gcjca"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_emfur"]
 font_size = 20
@@ -10,7 +10,7 @@ layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
-script = ExtResource("1_myfwx")
+script = ExtResource("1_gcjca")
 
 [node name="FolderSelect" type="FileDialog" parent="."]
 unique_name_in_owner = true

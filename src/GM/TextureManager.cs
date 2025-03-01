@@ -11,9 +11,12 @@ public class TextureManager
     public Dictionary<string, ImageTexture> Textures;
     public Dictionary<string, StandardMaterial3D> Materials;
 
+    private readonly PathManager _pathManager;
+
     public TextureManager(string gameDir)
     {
         GameDir = gameDir;
+        _pathManager = new PathManager(gameDir);
         Textures = new Dictionary<string, ImageTexture>();
         Materials = new Dictionary<string, StandardMaterial3D>();
     }
@@ -34,30 +37,20 @@ public class TextureManager
         {
             return true;
         }
-        
-        var options = new EnumerationOptions
-        {
-            MatchCasing = MatchCasing.CaseInsensitive,
-            RecurseSubdirectories = true,
-        };
-        
-        // TODO: Would be nice not to have to do a recursive search. But the folder case is meh
-        // We search for an animation file first. For now we're just going to use the first frame
+
         var realTextureName = textureName;
-        var animPaths = Directory.GetFiles(GameDir, $"{textureName}.soa", options);
-        if (!animPaths.IsEmpty())
+        if (_pathManager.TryGetAnimTexturePath(textureName, out var animPath))
         {
-            var reader = new TokenReader(animPaths[0]);
+            var reader = new TokenReader(animPath);
             reader.ReadString(4);
             realTextureName = reader.ReadString();
             GD.Print($"Loaded texture {realTextureName} for animation {textureName}.");
         }
-        
+
         var foundTexture = false;
-        var texPaths = Directory.GetFiles(GameDir, $"{realTextureName}.bmp", options);
-        if (!texPaths.IsEmpty())
+        if (_pathManager.TryGetTexturePath(realTextureName, out var texPath))
         {
-            var image = Image.LoadFromFile(texPaths[0]);
+            var image = Image.LoadFromFile(texPath);
             var texture = ImageTexture.CreateFromImage(image);
             Textures.Add(textureName, texture);
             
