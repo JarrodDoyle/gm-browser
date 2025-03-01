@@ -115,6 +115,10 @@ public class Sob
 	    var txSize = textureManager.Textures[poly.TextureName].GetSize();
 	    var scale = poly.AltUvMode ? 0.5f : 1.0f;
 	    var uvOffset = new Vector2(poly.Uv.Y, poly.Uv.X) * scale;
+	    if (flip)
+	    {
+		    uvOffset.X = 1.0f - uvOffset.X;
+	    }
         	
 	    foreach (var p in vs)
 	    {
