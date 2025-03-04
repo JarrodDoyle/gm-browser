@@ -1,0 +1,197 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmfu6i4ms4ojs"]
+
+[ext_resource type="Script" path="res://src/camera.gd" id="1_1sd1k"]
+[ext_resource type="Script" path="res://src/GM/WorldModel.cs" id="2_mmwxt"]
+
+[node name="Editor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldSelector" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 2
+size = Vector2i(275, 180)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.sow")
+use_native_dialog = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="MenuBar" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MenuBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/MenuBar/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+
+[node name="File" type="PopupMenu" parent="VBoxContainer/MenuBar/MarginContainer/MenuBar"]
+item_count = 1
+item_0/text = "Load"
+
+[node name="Edit" type="PopupMenu" parent="VBoxContainer/MenuBar/MarginContainer/MenuBar"]
+auto_translate_mode = 1
+
+[node name="View" type="PopupMenu" parent="VBoxContainer/MenuBar/MarginContainer/MenuBar"]
+auto_translate_mode = 1
+
+[node name="Help" type="PopupMenu" parent="VBoxContainer/MenuBar/MarginContainer/MenuBar"]
+auto_translate_mode = 1
+
+[node name="ToolBar" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ToolBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ToolBar/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Button" type="Button" parent="VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+current_tab = 0
+
+[node name="World" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Sector" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Object" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Polygon" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Thing" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(1212, 861)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+script = ExtResource("1_1sd1k")
+
+[node name="WorldManager" type="Node3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport"]
+script = ExtResource("2_mmwxt")
+
+[node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+current_tab = 0
+
+[node name="Console" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Issues" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/StatusBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/StatusBar/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Button" type="Button" parent="VBoxContainer/StatusBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/StatusBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="VBoxContainer/StatusBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="VBoxContainer/StatusBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="VBoxContainer/StatusBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2

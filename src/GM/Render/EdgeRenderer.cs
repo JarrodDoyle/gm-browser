@@ -51,12 +51,12 @@ public partial class EdgeRenderer : Node3D
         }
 
         DebugDraw3D.ClearAll();
-        using (DebugDraw3D.NewScopedConfig().SetThickness(0))
+        using (DebugDraw3D.NewScopedConfig().SetThickness(0).SetViewport(GetViewport()))
         {
             DebugDraw3D.DrawLines(genericLines.ToArray(), new Color("#e5e5e5"), _redrawRate);
         }
 
-        using (DebugDraw3D.NewScopedConfig().SetThickness(0).SetNoDepthTest(true))
+        using (DebugDraw3D.NewScopedConfig().SetThickness(0).SetNoDepthTest(true).SetViewport(GetViewport()))
         {
             DebugDraw3D.DrawLines(selectedLines.ToArray(), new Color("#ff0000"), _redrawRate);
         }

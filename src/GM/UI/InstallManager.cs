@@ -90,6 +90,6 @@ public partial class InstallManager : Control
         var idx = _installPaths.GetSelectedItems().FirstOrDefault(0);
         var path = _installPaths.GetItemText(idx);
         EditorContext.Init(path);
-        GetTree().ChangeSceneToFile("uid://qlawqidi7dfh");
+        GetTree().ChangeSceneToFile("uid://dmfu6i4ms4ojs");
     }
 }
