@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Gunmetal Editor"
-run/main_scene="res://res/scenes/main.tscn"
+run/main_scene="res://res/scenes/world_picker.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout=""
 
 [display]
 
