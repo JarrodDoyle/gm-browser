@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm57dj3vxxijm"]
+[gd_scene load_steps=6 format=3 uid="uid://qlawqidi7dfh"]
 
 [ext_resource type="Script" path="res://src/camera.gd" id="1_xc4gm"]
-[ext_resource type="PackedScene" uid="uid://cnootuwrgepg6" path="res://res/scenes/object_picker.tscn" id="2_na7f6"]
+[ext_resource type="PackedScene" uid="uid://c5iu5g4mkh8ip" path="res://res/scenes/world_picker.tscn" id="2_3611w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_036as"]
 
@@ -22,9 +22,7 @@ environment = SubResource("Environment_t22r8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 script = ExtResource("1_xc4gm")
 
-[node name="ObjectManager" type="Node3D" parent="."]
+[node name="WorldManager" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ObjectPicker" parent="CanvasLayer" instance=ExtResource("2_na7f6")]
+[node name="WorldPicker" parent="." instance=ExtResource("2_3611w")]

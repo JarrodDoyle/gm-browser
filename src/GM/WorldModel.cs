@@ -1,4 +1,3 @@
-using System.IO;
 using GM.IO;
 using GM.Render;
 using GM.UI;
@@ -6,66 +5,44 @@ using Godot;
 
 namespace GM;
 
- public partial class WorldModel : Node3D
+public partial class WorldModel : Node3D
 {
-    [Export(PropertyHint.GlobalDir)]
-    public string GameDir { get; set; }
-	
-    [Export]
-    public string ObjectName { get; set; }
-
-    [Export] public float ImportScale { get; set; } = 64.0f;
-
-    private World _world;
-    private TextureManager _textureManager;
-    private WorldRenderer _worldRenderer;
     private EdgeRenderer _edgeRenderer;
     private ObjectSelector _objectSelector;
-    
-    private string GetWorldPath()
-    {
-        var dir = $"{GameDir}/";
-        var options = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-        var paths = Directory.GetFiles(dir, $"{ObjectName}.sow", options);
-        return paths.IsEmpty() ? "" : paths[0];
-    }
+    private WorldRenderer _worldRenderer;
 
     public override void _Ready()
     {
-        var path = GetWorldPath();
-        var reader = new TokenReader(path);
-        _world = WorldParser.Read(reader, ImportScale);
-
-        _textureManager = new TextureManager(GameDir);
-        foreach (var sob in _world.Sobs)
+        var world = EditorContext.Instance.World;
+        var textureManager = EditorContext.Instance.TextureManager;
+        foreach (var sob in world.Sobs)
         {
             foreach (var textureName in sob.Textures)
             {
-                if (!_textureManager.LoadTexture(textureName))
+                if (!textureManager.LoadTexture(textureName))
                 {
                     GD.Print($"Failed to find texture: {textureName}");
                 }
             }
         }
-        
-        _textureManager.LogTextures();
-        
+
+        textureManager.LogTextures();
+
         _worldRenderer = new WorldRenderer();
-        _worldRenderer.World = _world;
-        _worldRenderer.Rebuild(_textureManager);
+        _worldRenderer.Rebuild();
         AddChild(_worldRenderer);
 
         _edgeRenderer = new EdgeRenderer();
-        _edgeRenderer.World = _world;
+        _edgeRenderer.World = world;
         _edgeRenderer.Redraw = true;
         AddChild(_edgeRenderer);
 
         _objectSelector = new ObjectSelector();
         _objectSelector.SelectedObject += ModifySelectedPoly;
-        _objectSelector.SelectedObject += (_) => _edgeRenderer.Redraw = true;
+        _objectSelector.SelectedObject += _ => _edgeRenderer.Redraw = true;
         AddChild(_objectSelector);
     }
-    
+
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey { Pressed: true } keyEvent)
@@ -73,21 +50,22 @@ namespace GM;
             if (keyEvent.Keycode == Key.T)
             {
                 var writer = new TokenWriter();
-                WorldParser.Write(writer, _world);
-                
-                var path = GetWorldPath();
+                WorldParser.Write(writer, EditorContext.Instance.World);
+
+                var path = EditorContext.Instance.WorldPath;
                 GD.Print($"Saving: {path}");
-                writer.Save(GetWorldPath());
+                writer.Save(path);
             }
         }
     }
 
     private void ModifySelectedPoly(Selection selection)
     {
-        var poly = _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId];
+        var world = EditorContext.Instance.World;
+        var poly = world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId];
         poly.Uv += new Vector2(8, 8);
-        _world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId] = poly;
-        
+        world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId] = poly;
+
         var objectNodes = GetTree().GetNodesInGroup(NodeGroups.Objects);
         foreach (var node in objectNodes)
         {
@@ -95,11 +73,11 @@ namespace GM;
             {
                 continue;
             }
-            
+
             if (objectRenderer.SectorId == selection.SectorId
                 && objectRenderer.ObjectId == selection.ObjectId)
             {
-                objectRenderer.Rebuild(_textureManager, _world);
+                objectRenderer.Rebuild();
             }
         }
     }

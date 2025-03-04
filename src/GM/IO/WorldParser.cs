@@ -5,8 +5,10 @@ namespace GM.IO;
 
 public static class WorldParser
 {
-    public static World Read(TokenReader reader, float importScale)
+    public static World Read(TokenReader reader)
     {
+        var importScale = EditorContext.Instance.ImportScale;
+
         var sectorCount = reader.ReadInt();
 
         var sobCount = 0;
@@ -25,28 +27,27 @@ public static class WorldParser
                 // Axis of some sort. Perhaps trans matrix columns
                 unknowns.AddRange(reader.ReadString(9));
             }
+
             sectors.Add(objectPositions);
-            
             sobCount += objectCount;
         }
 
         var sobs = new List<Sob>(sobCount);
         for (var i = 0; i < sobCount; i++)
         {
-            sobs.Add(ObjectParser.Read(reader, importScale));
+            sobs.Add(ObjectParser.Read(reader));
         }
 
-        return new World(importScale, sectors, sobs, unknowns);
+        return new World(sectors, sobs, unknowns);
     }
 
     public static void Write(TokenWriter writer, World world)
     {
         var unknowns = new Queue<string>(world.Unknowns);
-        
+
         writer.Write(world.Sectors.Count);
         writer.NewLine();
 
-        var sobCount = 0;
         foreach (var offsets in world.Sectors)
         {
             // TODO: Sector flags are dropped :(
@@ -56,14 +57,13 @@ public static class WorldParser
             foreach (var offset in offsets)
             {
                 writer.Write(unknowns.Dequeue(), true);
-                writer.Write(offset, world.ImportScale);
+                writer.Write(offset, EditorContext.Instance.ImportScale);
                 for (var i = 0; i < 9; i++)
                 {
                     writer.Write(unknowns.Dequeue(), true);
                 }
-                writer.NewLine();
 
-                sobCount++;
+                writer.NewLine();
             }
         }
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using GM.IO;
 using Godot;
 
@@ -7,39 +6,23 @@ namespace GM;
 
 public class TextureManager
 {
-    public string GameDir { get; }
-    public Dictionary<string, ImageTexture> Textures;
-    public Dictionary<string, StandardMaterial3D> Materials;
-
-    private readonly PathManager _pathManager;
-
-    public TextureManager(string gameDir)
-    {
-        GameDir = gameDir;
-        _pathManager = new PathManager(gameDir);
-        Textures = new Dictionary<string, ImageTexture>();
-        Materials = new Dictionary<string, StandardMaterial3D>();
-    }
+    public readonly Dictionary<string, StandardMaterial3D> Materials = new();
+    public readonly Dictionary<string, ImageTexture> Textures = new();
 
     public void LogTextures()
     {
         GD.Print("Textures: [");
-        foreach (var (name, texture) in Textures)
-        {
-            GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
-        }
+        foreach (var (name, texture) in Textures) GD.Print($"  Name: {name}, Size: {texture.GetSize()}");
         GD.Print("]");
     }
 
     public bool LoadTexture(string textureName)
     {
-        if (Textures.ContainsKey(textureName))
-        {
-            return true;
-        }
+        if (Textures.ContainsKey(textureName)) return true;
 
+        var pathManager = EditorContext.Instance.PathManager;
         var realTextureName = textureName;
-        if (_pathManager.TryGetAnimTexturePath(textureName, out var animPath))
+        if (pathManager.TryGetAnimTexturePath(textureName, out var animPath))
         {
             var reader = new TokenReader(animPath);
             reader.ReadString(4);
@@ -48,24 +31,25 @@ public class TextureManager
         }
 
         var foundTexture = false;
-        if (_pathManager.TryGetTexturePath(realTextureName, out var texPath))
+        if (pathManager.TryGetTexturePath(realTextureName, out var texPath))
         {
             var image = Image.LoadFromFile(texPath);
             var texture = ImageTexture.CreateFromImage(image);
             Textures.Add(textureName, texture);
-            
+
             foundTexture = true;
         }
         else
         {
             // Dummy blank texture
-            Textures.Add(textureName, ImageTexture.CreateFromImage(Image.CreateEmpty(256, 256, false, Image.Format.Rgb8)));
+            var image = Image.CreateEmpty(256, 256, false, Image.Format.Rgb8);
+            Textures.Add(textureName, ImageTexture.CreateFromImage(image));
         }
-        
+
         Materials.Add(textureName, new StandardMaterial3D
         {
             AlbedoTexture = Textures[textureName],
-            TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
+            TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest
         });
 
         return foundTexture;

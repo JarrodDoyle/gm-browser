@@ -10,22 +10,19 @@ public struct Sector
 
 public class World
 {
-    public float ImportScale { get; }
-    public List<List<Vector3>> Sectors;
-    public List<Sob> Sobs { get; }
-    public List<string> Unknowns { get; }
-
-    public World(float importScale, List<List<Vector3>> sectors, List<Sob> sobs, List<string> unknowns)
+    public World(List<List<Vector3>> sectors, List<Sob> sobs, List<string> unknowns)
     {
-        ImportScale = importScale;
         Sectors = sectors;
         Sobs = sobs;
         Unknowns = unknowns;
     }
 
-    public void AddToMesh(
-        TextureManager textureManager,
-        Dictionary<string, MeshSurfaceData> surfaceDataMap)
+    public List<List<Vector3>> Sectors { get; }
+
+    public List<Sob> Sobs { get; }
+    public List<string> Unknowns { get; }
+
+    public void AddToMesh(Dictionary<string, MeshSurfaceData> surfaceDataMap)
     {
         var sobOffset = 0;
         foreach (var sector in Sectors)
@@ -33,7 +30,7 @@ public class World
             for (var i = 0; i < sector.Count; i++)
             {
                 var offset = sector[i];
-                Sobs[sobOffset].AddToMesh(textureManager, surfaceDataMap, offset, i == 0);
+                Sobs[sobOffset].AddToMesh(surfaceDataMap, offset, i == 0);
                 sobOffset++;
             }
         }

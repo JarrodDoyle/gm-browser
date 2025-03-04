@@ -5,19 +5,19 @@ namespace GM.IO;
 
 public static class ObjectParser
 {
-    public static Sob Read(TokenReader reader, float importScale)
+    public static Sob Read(TokenReader reader)
     {
+        var importScale = EditorContext.Instance.ImportScale;
+
         var unknowns = new List<string>();
-        
         var vertexCount = reader.ReadInt();
         var polyCount = reader.ReadInt();
-        
         var vertices = new List<Vector3>(vertexCount);
         for (var i = 0; i < vertexCount; i++)
         {
             vertices.Add(reader.ReadVector3(importScale));
         }
-        
+
         var polygons = new List<Polygon>(polyCount);
         for (var i = 0; i < polyCount; i++)
         {
@@ -39,9 +39,10 @@ public static class ObjectParser
             unknowns.Add(reader.ReadString());
             var mode = (Polygon.RenderMode)reader.ReadInt();
             unknowns.AddRange(reader.ReadString(2));
-			
+
             // TODO: Should polygon parsing be split out?
-            polygons.Add(new Polygon {
+            polygons.Add(new Polygon
+            {
                 CenterAnchor = anchorMode == "0",
                 Brightness = brightness,
                 VertexCount = vCount,
@@ -52,24 +53,24 @@ public static class ObjectParser
                 UVec = uvec,
                 VVec = vvec,
                 TextureName = textureName,
-                Mode = mode,
+                Mode = mode
             });
         }
 
-        return new Sob(importScale, vertices, polygons, unknowns);
+        return new Sob(vertices, polygons, unknowns);
     }
 
     public static void Write(TokenWriter writer, Sob gmObject)
     {
         var unknowns = new Queue<string>(gmObject.Unknowns);
-        
+
         writer.Write(gmObject.Vertices.Count);
         writer.NewLine();
         writer.Write(gmObject.Polygons.Count);
         writer.NewLine();
         foreach (var vertex in gmObject.Vertices)
         {
-            writer.Write(vertex, gmObject.ImportScale);
+            writer.Write(vertex, EditorContext.Instance.ImportScale);
             writer.NewLine();
         }
 
@@ -86,6 +87,7 @@ public static class ObjectParser
                 writer.Write(unknowns.Dequeue());
                 writer.NewLine();
             }
+
             writer.Write(poly.Brightness);
             writer.Write(poly.VertexCount);
             foreach (var idx in poly.Indices)
@@ -107,6 +109,7 @@ public static class ObjectParser
                 writer.Write(poly.Uv.X * 128.0f);
                 writer.Write(0);
             }
+
             writer.Write(poly.UVec, 65536.0f);
             writer.Write(poly.VVec, 65536.0f);
             writer.Write(poly.LmUv, 128.0f);

@@ -6,9 +6,18 @@
 font_size = 20
 
 [node name="WorldPicker" type="Control"]
+custom_minimum_size = Vector2(640, 480)
 layout_mode = 3
-anchors_preset = 9
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xujo6")
 
@@ -26,9 +35,10 @@ use_native_dialog = true
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 134.0
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
@@ -60,7 +70,13 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Browse"
 
-[node name="ObjectList" type="ItemList" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="WorldList" type="ItemList" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="LoadButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Load"
