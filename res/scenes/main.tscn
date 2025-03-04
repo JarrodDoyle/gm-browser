@@ -24,3 +24,12 @@ script = ExtResource("1_xc4gm")
 
 [node name="WorldManager" type="Node3D" parent="."]
 script = ExtResource("2_v08ld")
+
+[node name="WorldSelector" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+size = Vector2i(275, 180)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.sow")
+use_native_dialog = true

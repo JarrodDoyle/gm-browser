@@ -10,37 +10,28 @@ public partial class WorldModel : Node3D
     private EdgeRenderer _edgeRenderer;
     private ObjectSelector _objectSelector;
     private WorldRenderer _worldRenderer;
+    private FileDialog _worldSelector;
 
     public override void _Ready()
     {
-        var world = EditorContext.Instance.World;
-        var textureManager = EditorContext.Instance.TextureManager;
-        foreach (var sob in world.Sobs)
-        {
-            foreach (var textureName in sob.Textures)
-            {
-                if (!textureManager.LoadTexture(textureName))
-                {
-                    GD.Print($"Failed to find texture: {textureName}");
-                }
-            }
-        }
-
-        textureManager.LogTextures();
-
         _worldRenderer = new WorldRenderer();
-        _worldRenderer.Rebuild();
         AddChild(_worldRenderer);
 
         _edgeRenderer = new EdgeRenderer();
-        _edgeRenderer.World = world;
-        _edgeRenderer.Redraw = true;
         AddChild(_edgeRenderer);
 
         _objectSelector = new ObjectSelector();
         _objectSelector.SelectedObject += ModifySelectedPoly;
         _objectSelector.SelectedObject += _ => _edgeRenderer.Redraw = true;
         AddChild(_objectSelector);
+
+        _worldSelector = GetNode<FileDialog>("%WorldSelector");
+        _worldSelector.RootSubfolder = EditorContext.Instance.GameDir;
+        _worldSelector.Visible = true;
+        _worldSelector.FileSelected += EditorContext.Instance.LoadWorld;
+
+        EditorContext.Instance.LoadedWorld += Reload;
+        Reload();
     }
 
     public override void _Input(InputEvent @event)
@@ -56,7 +47,32 @@ public partial class WorldModel : Node3D
                 GD.Print($"Saving: {path}");
                 writer.Save(path);
             }
+
+            if (keyEvent.Keycode == Key.O)
+            {
+                _worldSelector.Visible = true;
+            }
         }
+    }
+
+    private void Reload()
+    {
+        var world = EditorContext.Instance.World;
+        var textureManager = EditorContext.Instance.TextureManager;
+        foreach (var sob in world.Sobs)
+        {
+            foreach (var textureName in sob.Textures)
+            {
+                if (!textureManager.LoadTexture(textureName))
+                {
+                    GD.Print($"Failed to find texture: {textureName}");
+                }
+            }
+        }
+
+        textureManager.LogTextures();
+        _worldRenderer.Rebuild();
+        _edgeRenderer.Redraw = true;
     }
 
     private void ModifySelectedPoly(Selection selection)

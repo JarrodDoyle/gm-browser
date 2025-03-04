@@ -10,6 +10,13 @@ public struct Sector
 
 public class World
 {
+    public World()
+    {
+        Sectors = new List<List<Vector3>>();
+        Sobs = new List<Sob>();
+        Unknowns = new List<string>();
+    }
+
     public World(List<List<Vector3>> sectors, List<Sob> sobs, List<string> unknowns)
     {
         Sectors = sectors;

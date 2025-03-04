@@ -3,12 +3,11 @@ using Godot;
 
 namespace GM.Render;
 
-public partial class EdgeRenderer: Node3D
+public partial class EdgeRenderer : Node3D
 {
-    public World World;
-    public bool Redraw = false;
     private float _redrawRate = 1.0f;
-    private float _redrawTimer = 0.0f;
+    private float _redrawTimer;
+    public bool Redraw;
 
     public override void _Process(double delta)
     {
@@ -34,7 +33,7 @@ public partial class EdgeRenderer: Node3D
         var cameraPos = GetViewport().GetCamera3D().GlobalPosition;
         var genericLines = new List<Vector3>();
         var selectedLines = new List<Vector3>();
-        
+
         var objectNodes = GetTree().GetNodesInGroup(NodeGroups.Objects);
         foreach (var node in objectNodes)
         {
@@ -42,7 +41,7 @@ public partial class EdgeRenderer: Node3D
             {
                 continue;
             }
-            
+
             var sectorId = objectRenderer.SectorId;
             var objectId = objectRenderer.ObjectId;
             var globalObjectId = objectRenderer.GlobalObjectId;
@@ -50,7 +49,7 @@ public partial class EdgeRenderer: Node3D
             var lines = objectRenderer.IsInGroup(NodeGroups.Selected) ? selectedLines : genericLines;
             AddLines(lines, cameraPos, sectorId, objectId, globalObjectId);
         }
-        
+
         DebugDraw3D.ClearAll();
         using (DebugDraw3D.NewScopedConfig().SetThickness(0))
         {
@@ -62,7 +61,7 @@ public partial class EdgeRenderer: Node3D
             DebugDraw3D.DrawLines(selectedLines.ToArray(), new Color("#ff0000"), _redrawRate);
         }
     }
-    
+
     private void AddLines(
         List<Vector3> lines,
         Vector3 cameraPos,
@@ -70,9 +69,10 @@ public partial class EdgeRenderer: Node3D
         int objectId,
         int globalObjectId)
     {
-        var offset = World.Sectors[sectorId][objectId];
-        var gmObject = World.Sobs[globalObjectId];
-            
+        var world = EditorContext.Instance.World;
+        var offset = world.Sectors[sectorId][objectId];
+        var gmObject = world.Sobs[globalObjectId];
+
         foreach (var poly in gmObject.Polygons)
         {
             for (var i = 0; i < poly.VertexCount; i++)
