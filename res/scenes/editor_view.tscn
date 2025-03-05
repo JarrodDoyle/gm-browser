@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmfu6i4ms4ojs"]
+[gd_scene load_steps=5 format=3 uid="uid://dmfu6i4ms4ojs"]
 
 [ext_resource type="Script" path="res://src/UI/EditorView.cs" id="1_5asxq"]
 [ext_resource type="PackedScene" uid="uid://dfcn3ibg6kfyr" path="res://res/scenes/menu_bar.tscn" id="1_u80vk"]
 [ext_resource type="PackedScene" uid="uid://rtrsqasniank" path="res://res/scenes/world_viewport.tscn" id="2_fodt7"]
+[ext_resource type="PackedScene" uid="uid://blyrh0h31r6v" path="res://res/scenes/polygon_editor.tscn" id="3_07g8q"]
 
 [node name="EditorView" type="Control"]
 layout_mode = 3
@@ -78,9 +79,10 @@ size_flags_vertical = 3
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 2
-current_tab = 0
+current_tab = 3
 
 [node name="World" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -94,8 +96,7 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="Polygon" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
-visible = false
+[node name="Polygon" parent="VBoxContainer/HBoxContainer/TabContainer" instance=ExtResource("3_07g8q")]
 layout_mode = 2
 metadata/_tab_index = 3
 

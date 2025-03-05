@@ -1,0 +1,344 @@
+[gd_scene load_steps=2 format=3 uid="uid://blyrh0h31r6v"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gmnvk"]
+
+[node name="ScrollContainer" type="ScrollContainer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 339.0
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PropertyGroups" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Details" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/PropertyGroups/Details"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PropertyGroups/Details/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]Details[/b]"
+fit_content = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PropertyGroups/Details"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+text = "Handle"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+text = "Render Type"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Normal"
+popup/item_1/text = "Sector"
+popup/item_1/id = 1
+popup/item_2/text = "Hole"
+popup/item_2/id = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+text = "Mappable"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+text = "Slow Sort"
+
+[node name="CheckBox2" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+layout_mode = 2
+
+[node name="Texture" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/PropertyGroups/Texture"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PropertyGroups/Texture/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]Texture[/b]"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PropertyGroups/Texture"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_gmnvk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Effect"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+layout_mode = 2
+item_count = 6
+popup/item_0/text = "None"
+popup/item_1/text = "Add"
+popup/item_1/id = 1
+popup/item_2/text = "Reflective"
+popup/item_2/id = 2
+popup/item_3/text = "Shade"
+popup/item_3/id = 3
+popup/item_4/text = "Translucent"
+popup/item_4/id = 4
+popup/item_5/text = "VarAdd"
+popup/item_5/id = 5
+
+[node name="Overlay" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/PropertyGroups/Overlay"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PropertyGroups/Overlay/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/bold_font_size = 14
+bbcode_enabled = true
+text = "[b]Overlay[/b]"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PropertyGroups/Overlay"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_gmnvk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Effect"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+layout_mode = 2
+item_count = 6
+popup/item_0/text = "None"
+popup/item_1/text = "Add"
+popup/item_1/id = 1
+popup/item_2/text = "Reflective"
+popup/item_2/id = 2
+popup/item_3/text = "Shade"
+popup/item_3/id = 3
+popup/item_4/text = "Translucent"
+popup/item_4/id = 4
+popup/item_5/text = "VarAdd"
+popup/item_5/id = 5
+
+[node name="UVAlignment" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVAlignment"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PropertyGroups/UVAlignment/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]UV Alignment[/b]"
+fit_content = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PropertyGroups/UVAlignment"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+text = "Texture"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+text = "Lightmap"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+text = "U Axis"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit3" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label4" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+text = "V Axis"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit3" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UVScrolling" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVScrolling"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PropertyGroups/UVScrolling/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]UV Scrolling[/b]"
+fit_content = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PropertyGroups/UVScrolling"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+layout_mode = 2
+text = "Texture"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+layout_mode = 2
+text = "Lightmap"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
