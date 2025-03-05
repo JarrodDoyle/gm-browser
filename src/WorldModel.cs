@@ -19,8 +19,6 @@ public partial class WorldModel : Node3D
         AddChild(_edgeRenderer);
 
         _objectSelector = new ObjectSelector();
-        _objectSelector.SelectedObject += ModifySelectedPoly;
-        _objectSelector.SelectedObject += _ => _edgeRenderer.Redraw = true;
         AddChild(_objectSelector);
 
         EditorContext.Instance.LoadedWorld += Reload;

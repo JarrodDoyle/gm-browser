@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GME.UI;
 using Godot;
 
 namespace GME.Render;
@@ -8,6 +9,11 @@ public partial class EdgeRenderer : Node3D
     private float _redrawRate = 1.0f;
     private float _redrawTimer;
     public bool Redraw;
+
+    public override void _Ready()
+    {
+        EditorContext.Instance.SelectionChanged += () => Redraw = true;
+    }
 
     public override void _Process(double delta)
     {
@@ -45,9 +51,13 @@ public partial class EdgeRenderer : Node3D
             var sectorId = objectRenderer.SectorId;
             var objectId = objectRenderer.ObjectId;
             var globalObjectId = objectRenderer.GlobalObjectId;
-
-            var lines = objectRenderer.IsInGroup(NodeGroups.Selected) ? selectedLines : genericLines;
-            AddLines(lines, cameraPos, sectorId, objectId, globalObjectId);
+            AddLines(genericLines, cameraPos, sectorId, objectId, globalObjectId);
+        }
+        
+        var selection = EditorContext.Instance.CurrentSelection;
+        if (selection != Selection.None)
+        {
+            AddLines(selectedLines, cameraPos, selection.SectorId, selection.ObjectId, selection.GlobalObjectId);
         }
 
         DebugDraw3D.ClearAll();
@@ -62,7 +72,7 @@ public partial class EdgeRenderer : Node3D
         }
     }
 
-    private void AddLines(
+    private static void AddLines(
         List<Vector3> lines,
         Vector3 cameraPos,
         int sectorId,

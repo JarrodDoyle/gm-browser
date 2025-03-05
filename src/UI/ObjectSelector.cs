@@ -1,10 +1,13 @@
+using System;
 using GME.Render;
 using Godot;
 
 namespace GME.UI;
 
-public readonly struct Selection
+public readonly struct Selection : IEquatable<Selection>
 {
+    public static readonly Selection None = new(-1, -1, -1, -1);
+    
     public readonly int SectorId;
     public readonly int ObjectId;
     public readonly int GlobalObjectId;
@@ -17,13 +20,35 @@ public readonly struct Selection
         GlobalObjectId = globalObjectId;
         PolyId = polyId;
     }
+
+    public bool Equals(Selection other)
+    {
+        return SectorId == other.SectorId && ObjectId == other.ObjectId && GlobalObjectId == other.GlobalObjectId && PolyId == other.PolyId;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Selection other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(SectorId, ObjectId, GlobalObjectId, PolyId);
+    }
+
+    public static bool operator ==(Selection left, Selection right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Selection left, Selection right)
+    {
+        return !(left == right);
+    }
 }
 
 public partial class ObjectSelector: Node3D
 {
-    public delegate void SelectedObjectEventHandler(Selection selection);
-    public event SelectedObjectEventHandler SelectedObject;
-    
     private bool _selectObject;
     private Vector2 _selectPosition;
     
@@ -74,12 +99,7 @@ public partial class ObjectSelector: Node3D
         
         GD.Print($"Sector: {sectorIdx}, Object: {objectIdx}, Poly: {polyIdx}");
         
-        foreach (var node in GetTree().GetNodesInGroup(NodeGroups.Selected))
-        {
-            node.RemoveFromGroup(NodeGroups.Selected);
-        }
-        objectRenderer.AddToGroup(NodeGroups.Selected);
-
-        SelectedObject?.Invoke(new Selection(sectorIdx, objectIdx, globalObjectIdx, polyIdx));
+        var selection = new Selection(sectorIdx, objectIdx, globalObjectIdx, polyIdx);
+        EditorContext.Instance.CurrentSelection = selection;
     }
 }
