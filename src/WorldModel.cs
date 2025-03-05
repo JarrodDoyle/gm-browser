@@ -26,7 +26,7 @@ public partial class WorldModel : Node3D
         AddChild(_objectSelector);
 
         _worldSelector = GetNode<FileDialog>("%WorldSelector");
-        _worldSelector.RootSubfolder = EditorContext.Instance.GameDir;
+        _worldSelector.CurrentDir = EditorContext.Instance.GameDir;
         _worldSelector.Visible = true;
         _worldSelector.FileSelected += EditorContext.Instance.LoadWorld;
 
