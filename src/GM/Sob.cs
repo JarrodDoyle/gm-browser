@@ -4,7 +4,7 @@ using Godot;
 
 namespace GME.GM;
 
-public struct Polygon
+public class Polygon
 {
     public enum RenderMode
     {
