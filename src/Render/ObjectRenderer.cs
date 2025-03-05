@@ -11,6 +11,18 @@ public partial class ObjectRenderer : Node3D
     public int ObjectId;
     public int SectorId;
 
+    public override void _Ready()
+    {
+        EditorContext.Instance.ObjectUpdated += () =>
+        {
+            var selection = EditorContext.Instance.CurrentSelection;
+            if (selection.GlobalObjectId == GlobalObjectId)
+            {
+                Rebuild();
+            }
+        };
+    }
+
     public void Rebuild()
     {
         foreach (var child in GetChildren())
