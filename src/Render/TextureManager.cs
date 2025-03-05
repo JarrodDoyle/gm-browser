@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GME.IO;
 using Godot;
 
-namespace GME;
+namespace GME.Render;
 
 public class TextureManager
 {

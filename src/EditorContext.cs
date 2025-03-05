@@ -1,4 +1,6 @@
+using GME.GM;
 using GME.IO;
+using GME.Render;
 using Godot;
 
 namespace GME;

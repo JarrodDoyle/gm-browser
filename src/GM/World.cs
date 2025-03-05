@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using GME.Render;
 using Godot;
 
-namespace GME;
+namespace GME.GM;
 
 public struct Sector
 {
