@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://blyrh0h31r6v"]
+[gd_scene load_steps=3 format=3 uid="uid://blyrh0h31r6v"]
+
+[ext_resource type="Script" path="res://src/UI/PolygonEditor.cs" id="1_80277"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gmnvk"]
 
@@ -8,6 +10,7 @@ anchor_bottom = 1.0
 offset_right = 339.0
 grow_vertical = 2
 horizontal_scroll_mode = 0
+script = ExtResource("1_80277")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -237,15 +240,23 @@ text = "Texture"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+[node name="TextureU" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="TextureV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+[node name="TextureV" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
 [node name="LightmapUV" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
@@ -255,15 +266,23 @@ text = "Lightmap"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LightmapU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+[node name="LightmapU" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="LightmapV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+[node name="LightmapV" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
 [node name="ProjectionU" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
@@ -273,20 +292,32 @@ text = "U Axis"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ProjectionUX" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="UProjectionX" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="ProjectionUY" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="UProjectionY" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="ProjectionUZ" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="UProjectionZ" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
 [node name="ProjectionV" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
@@ -296,20 +327,32 @@ text = "V Axis"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ProjectionVX" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="VProjectionX" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="ProjectionVY" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="VProjectionY" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
-[node name="ProjectionVZ" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="VProjectionZ" type="SpinBox" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+step = 0.0
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0
 
 [node name="UVScrolling" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
 layout_mode = 2
@@ -339,15 +382,19 @@ text = "Texture"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureScrollU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+[node name="TextureScrollU" type="SpinBox" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
 
-[node name="TextureScrollV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+[node name="TextureScrollV" type="SpinBox" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
 
 [node name="LightmapUVScroll" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
 layout_mode = 2
@@ -357,12 +404,16 @@ text = "Lightmap"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LightmapScrollU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+[node name="LightmapScrollU" type="SpinBox" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
 
-[node name="LightmapScrollV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+[node name="LightmapScrollV" type="SpinBox" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
