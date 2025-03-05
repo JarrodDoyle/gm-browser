@@ -7,6 +7,9 @@ namespace GME.UI;
 
 public partial class InstallManager : Control
 {
+    public delegate void SelectedInstallEventHandler(string installPath);
+    public event SelectedInstallEventHandler SelectedInstall;
+    
     private Button _addButton;
     private ConfigFile _configFile;
     private Button _exitButton;
@@ -89,7 +92,8 @@ public partial class InstallManager : Control
     {
         var idx = _installPaths.GetSelectedItems().FirstOrDefault(0);
         var path = _installPaths.GetItemText(idx);
-        EditorContext.Init(path);
-        GetTree().ChangeSceneToFile("uid://dmfu6i4ms4ojs");
+        SelectedInstall?.Invoke(path);
+        // EditorContext.Init(path);
+        // GetTree().ChangeSceneToFile("uid://dmfu6i4ms4ojs");
     }
 }
