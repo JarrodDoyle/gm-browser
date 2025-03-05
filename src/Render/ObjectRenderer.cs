@@ -13,14 +13,21 @@ public partial class ObjectRenderer : Node3D
 
     public override void _Ready()
     {
-        EditorContext.Instance.ObjectUpdated += () =>
+        EditorContext.Instance.ObjectUpdated += OnObjectUpdated;
+    }
+
+    public override void _ExitTree()
+    {
+        EditorContext.Instance.ObjectUpdated -= OnObjectUpdated;
+    }
+
+    public void OnObjectUpdated()
+    {
+        var selection = EditorContext.Instance.CurrentSelection;
+        if (selection.GlobalObjectId == GlobalObjectId)
         {
-            var selection = EditorContext.Instance.CurrentSelection;
-            if (selection.GlobalObjectId == GlobalObjectId)
-            {
-                Rebuild();
-            }
-        };
+            Rebuild();
+        }
     }
 
     public void Rebuild()

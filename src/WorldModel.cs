@@ -25,6 +25,11 @@ public partial class WorldModel : Node3D
         Reload();
     }
 
+    public override void _ExitTree()
+    {
+        EditorContext.Instance.LoadedWorld -= Reload;
+    }
+
     private void Reload()
     {
         var world = EditorContext.Instance.World;

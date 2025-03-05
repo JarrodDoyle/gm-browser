@@ -12,7 +12,17 @@ public partial class EdgeRenderer : Node3D
 
     public override void _Ready()
     {
-        EditorContext.Instance.SelectionChanged += () => Redraw = true;
+        EditorContext.Instance.SelectionChanged += OnSelectionChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        EditorContext.Instance.SelectionChanged -= OnSelectionChanged;
+    }
+
+    private void OnSelectionChanged()
+    {
+        Redraw = true;
     }
 
     public override void _Process(double delta)
