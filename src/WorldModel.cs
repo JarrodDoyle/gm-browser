@@ -1,4 +1,3 @@
-using GME.IO;
 using GME.Render;
 using GME.UI;
 using Godot;
@@ -10,7 +9,6 @@ public partial class WorldModel : Node3D
     private EdgeRenderer _edgeRenderer;
     private ObjectSelector _objectSelector;
     private WorldRenderer _worldRenderer;
-    private FileDialog _worldSelector;
 
     public override void _Ready()
     {
@@ -25,34 +23,8 @@ public partial class WorldModel : Node3D
         _objectSelector.SelectedObject += _ => _edgeRenderer.Redraw = true;
         AddChild(_objectSelector);
 
-        _worldSelector = GetNode<FileDialog>("%WorldSelector");
-        _worldSelector.CurrentDir = EditorContext.Instance.GameDir;
-        _worldSelector.Visible = true;
-        _worldSelector.FileSelected += EditorContext.Instance.LoadWorld;
-
         EditorContext.Instance.LoadedWorld += Reload;
         Reload();
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventKey { Pressed: true } keyEvent)
-        {
-            if (keyEvent.Keycode == Key.T)
-            {
-                var writer = new TokenWriter();
-                WorldParser.Write(writer, EditorContext.Instance.World);
-
-                var path = EditorContext.Instance.WorldPath;
-                GD.Print($"Saving: {path}");
-                writer.Save(path);
-            }
-
-            if (keyEvent.Keycode == Key.O)
-            {
-                _worldSelector.Visible = true;
-            }
-        }
     }
 
     private void Reload()

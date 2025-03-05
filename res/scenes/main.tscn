@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhfylimh4cikv"]
 
-[ext_resource type="Script" path="res://src/Main.cs" id="1_j8pjx"]
-[ext_resource type="PackedScene" uid="uid://c5iu5g4mkh8ip" path="res://res/scenes/install_manager.tscn" id="2_rxci7"]
+[ext_resource type="Script" path="res://src/Main.cs" id="1_shpn4"]
+[ext_resource type="PackedScene" uid="uid://c5iu5g4mkh8ip" path="res://res/scenes/install_manager.tscn" id="2_jdff7"]
 
 [node name="Node" type="Node"]
-script = ExtResource("1_j8pjx")
+script = ExtResource("1_shpn4")
 
-[node name="InstallManager" parent="." instance=ExtResource("2_rxci7")]
+[node name="InstallManager" parent="." instance=ExtResource("2_jdff7")]
 unique_name_in_owner = true
