@@ -49,27 +49,4 @@ public partial class WorldModel : Node3D
         _worldRenderer.Rebuild();
         _edgeRenderer.Redraw = true;
     }
-
-    private void ModifySelectedPoly(Selection selection)
-    {
-        var world = EditorContext.Instance.World;
-        var poly = world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId];
-        poly.Uv += new Vector2(8, 8);
-        world.Sobs[selection.GlobalObjectId].Polygons[selection.PolyId] = poly;
-
-        var objectNodes = GetTree().GetNodesInGroup(NodeGroups.Objects);
-        foreach (var node in objectNodes)
-        {
-            if (node is not ObjectRenderer objectRenderer)
-            {
-                continue;
-            }
-
-            if (objectRenderer.SectorId == selection.SectorId
-                && objectRenderer.ObjectId == selection.ObjectId)
-            {
-                objectRenderer.Rebuild();
-            }
-        }
-    }
 }
