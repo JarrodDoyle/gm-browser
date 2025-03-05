@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace GM.IO;
+namespace GME.IO;
 
 public static class ObjectParser
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace GM.UI;
+namespace GME.UI;
 
 public partial class InstallManager : Control
 {

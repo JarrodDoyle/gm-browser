@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 
-namespace GM.IO;
+namespace GME.IO;
 
 public class TokenWriter
 {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace GM.Render;
+namespace GME.Render;
 
 public partial class WorldRenderer : Node3D
 {

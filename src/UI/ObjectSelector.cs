@@ -1,7 +1,7 @@
-using GM.Render;
+using GME.Render;
 using Godot;
 
-namespace GM.UI;
+namespace GME.UI;
 
 public readonly struct Selection
 {

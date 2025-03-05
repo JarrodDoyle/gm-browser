@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using GM.IO;
+using GME.IO;
 using Godot;
 
-namespace GM;
+namespace GME;
 
 public class TextureManager
 {

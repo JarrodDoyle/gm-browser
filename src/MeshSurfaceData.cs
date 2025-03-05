@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using GArray = Godot.Collections.Array;
 
-namespace GM;
+namespace GME;
 
 public class MeshSurfaceData
 {

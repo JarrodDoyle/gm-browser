@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 
-namespace GM.IO;
+namespace GME.IO;
 
 public class PathManager
 {

@@ -1,4 +1,4 @@
-namespace GM;
+namespace GME;
 
 public static class NodeGroups
 {

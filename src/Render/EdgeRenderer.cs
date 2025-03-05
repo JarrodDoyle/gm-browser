@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace GM.Render;
+namespace GME.Render;
 
 public partial class EdgeRenderer : Node3D
 {

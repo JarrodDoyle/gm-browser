@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5iu5g4mkh8ip"]
 
-[ext_resource type="Script" path="res://src/GM/UI/InstallManager.cs" id="1_02tca"]
+[ext_resource type="Script" path="res://src/UI/InstallManager.cs" id="1_yefnx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_emfur"]
 font_size = 20
@@ -19,8 +19,8 @@ offset_right = 320.0
 offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_02tca")
-ConfigFilePath = "user://editor_settings.ini"
+script = ExtResource("1_yefnx")
+ConfigFilePath = "user://config.ini"
 
 [node name="FolderSelect" type="FileDialog" parent="."]
 unique_name_in_owner = true

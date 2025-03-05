@@ -1,7 +1,7 @@
-using GM.IO;
+using GME.IO;
 using Godot;
 
-namespace GM;
+namespace GME;
 
 public class EditorContext
 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace GM.Render;
+namespace GME.Render;
 
 public partial class ObjectRenderer : Node3D
 {

@@ -1,9 +1,9 @@
-using GM.IO;
-using GM.Render;
-using GM.UI;
+using GME.IO;
+using GME.Render;
+using GME.UI;
 using Godot;
 
-namespace GM;
+namespace GME;
 
 public partial class WorldModel : Node3D
 {

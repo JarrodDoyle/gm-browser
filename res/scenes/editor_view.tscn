@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmfu6i4ms4ojs"]
 
 [ext_resource type="Script" path="res://src/camera.gd" id="1_1sd1k"]
-[ext_resource type="Script" path="res://src/GM/WorldModel.cs" id="2_mmwxt"]
+[ext_resource type="Script" path="res://src/WorldModel.cs" id="2_mmwxt"]
 
 [node name="Editor" type="Control"]
 layout_mode = 3
