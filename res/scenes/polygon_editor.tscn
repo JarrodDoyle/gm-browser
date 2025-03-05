@@ -41,19 +41,21 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="Handle" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
 layout_mode = 2
 text = "Handle"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="HandleText" type="LineEdit" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="RenderType" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
 layout_mode = 2
 text = "Render Type"
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="RenderTypeOption" type="OptionButton" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 item_count = 3
 popup/item_0/text = "Normal"
@@ -62,18 +64,20 @@ popup/item_1/id = 1
 popup/item_2/text = "Hole"
 popup/item_2/id = 2
 
-[node name="Label3" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="Mappable" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
 layout_mode = 2
 text = "Mappable"
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="MappableCheckbox" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="SlowSort" type="Label" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
 layout_mode = 2
 text = "Slow Sort"
 
-[node name="CheckBox2" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+[node name="SlowSortCheckbox" type="CheckBox" parent="MarginContainer/PropertyGroups/Details/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Texture" type="VBoxContainer" parent="MarginContainer/PropertyGroups"]
@@ -95,6 +99,7 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -110,19 +115,21 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+[node name="TextureName" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Name"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+[node name="TextureNameText" type="LineEdit" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+[node name="TextureEffect" type="Label" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Effect"
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+[node name="TextureEffectOption" type="OptionButton" parent="MarginContainer/PropertyGroups/Texture/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 item_count = 6
 popup/item_0/text = "None"
@@ -156,7 +163,8 @@ fit_content = true
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer"]
+[node name="OverlayRect" type="TextureRect" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -172,19 +180,21 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+[node name="OverlayName" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Name"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+[node name="OverlayNameText" type="LineEdit" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+[node name="OverlayEffect" type="Label" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Effect"
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+[node name="OverlayEffectOption" type="OptionButton" parent="MarginContainer/PropertyGroups/Overlay/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 item_count = 6
 popup/item_0/text = "None"
@@ -219,7 +229,7 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+[node name="TextureUV" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
 text = "Texture"
 
@@ -227,15 +237,17 @@ text = "Texture"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+[node name="TextureU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+[node name="TextureV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+[node name="LightmapUV" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
 text = "Lightmap"
 
@@ -243,15 +255,17 @@ text = "Lightmap"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+[node name="LightmapU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+[node name="LightmapV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label3" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+[node name="ProjectionU" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
 text = "U Axis"
 
@@ -259,19 +273,22 @@ text = "U Axis"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="ProjectionUX" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="ProjectionUY" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit3" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+[node name="ProjectionUZ" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label4" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
+[node name="ProjectionV" type="Label" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer"]
 layout_mode = 2
 text = "V Axis"
 
@@ -279,15 +296,18 @@ text = "V Axis"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="ProjectionVX" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="ProjectionVY" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit3" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+[node name="ProjectionVZ" type="LineEdit" parent="MarginContainer/PropertyGroups/UVAlignment/GridContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -311,7 +331,7 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+[node name="TextureUVScroll" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
 layout_mode = 2
 text = "Texture"
 
@@ -319,15 +339,17 @@ text = "Texture"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+[node name="TextureScrollU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+[node name="TextureScrollV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
+[node name="LightmapUVScroll" type="Label" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer"]
 layout_mode = 2
 text = "Lightmap"
 
@@ -335,10 +357,12 @@ text = "Lightmap"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+[node name="LightmapScrollU" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+[node name="LightmapScrollV" type="LineEdit" parent="MarginContainer/PropertyGroups/UVScrolling/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
