@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://rtrsqasniank"]
+
+[ext_resource type="Script" path="res://src/camera.gd" id="1_yvyr4"]
+[ext_resource type="Script" path="res://src/WorldModel.cs" id="2_ceosx"]
+
+[node name="WorldViewport" type="SubViewport"]
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(1212, 861)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+script = ExtResource("1_yvyr4")
+
+[node name="WorldManager" type="Node3D" parent="."]
+script = ExtResource("2_ceosx")
