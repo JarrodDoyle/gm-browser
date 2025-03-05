@@ -15,7 +15,7 @@ public partial class EditorView : Control
 		_worldSelector.FileSelected += EditorContext.Instance.LoadWorld;
 	}
 	
-	public override void _Input(InputEvent @event)
+	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventKey { Pressed: true } keyEvent)
 		{
