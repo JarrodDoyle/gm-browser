@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfcn3ibg6kfyr"]
+
+[ext_resource type="Script" path="res://src/UI/MenuBar.cs" id="1_e6wlp"]
+
+[node name="MenuBar" type="PanelContainer"]
+script = ExtResource("1_e6wlp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="MenuBar" type="MenuBar" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+
+[node name="File" type="PopupMenu" parent="MarginContainer/MenuBar"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+
+[node name="Edit" type="PopupMenu" parent="MarginContainer/MenuBar"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+
+[node name="View" type="PopupMenu" parent="MarginContainer/MenuBar"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+
+[node name="Help" type="PopupMenu" parent="MarginContainer/MenuBar"]
+unique_name_in_owner = true
+auto_translate_mode = 1
