@@ -10,9 +10,11 @@ public class EditorContext
 {
     public delegate void LoadedWorldEventHandler();
     public delegate void SelectionChangedEventHandler();
+    public delegate void ObjectUpdatedEventHandler();
     
     public event LoadedWorldEventHandler LoadedWorld;
     public event SelectionChangedEventHandler SelectionChanged;
+    public event ObjectUpdatedEventHandler ObjectUpdated;
 
     public static EditorContext? Instance { get; private set; }
     
@@ -51,5 +53,10 @@ public class EditorContext
         GD.Print($"Loaded world: {path}");
         CurrentSelection = Selection.None;
         LoadedWorld?.Invoke();
+    }
+
+    public void TriggerObjectUpdated()
+    {
+        ObjectUpdated?.Invoke();
     }
 }
