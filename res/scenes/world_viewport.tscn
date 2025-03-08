@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://rtrsqasniank"]
 
-[ext_resource type="Script" path="res://src/camera.gd" id="1_yvyr4"]
-[ext_resource type="Script" path="res://src/WorldModel.cs" id="2_ceosx"]
+[ext_resource type="Script" uid="uid://ckwroxlla3ii7" path="res://src/camera.gd" id="1_yvyr4"]
+[ext_resource type="Script" uid="uid://by41bo7lkk0rh" path="res://src/WorldModel.cs" id="2_ceosx"]
 
 [node name="WorldViewport" type="SubViewport"]
 handle_input_locally = false

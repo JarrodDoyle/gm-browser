@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dfcn3ibg6kfyr"]
 
-[ext_resource type="Script" path="res://src/UI/MenuBar.cs" id="1_e6wlp"]
+[ext_resource type="Script" uid="uid://b5ieq073epfic" path="res://src/UI/MenuBar.cs" id="1_e6wlp"]
 
 [node name="MenuBar" type="PanelContainer"]
 script = ExtResource("1_e6wlp")

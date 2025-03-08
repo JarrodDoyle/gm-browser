@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5iu5g4mkh8ip"]
 
-[ext_resource type="Script" path="res://src/UI/InstallManager.cs" id="1_yefnx"]
+[ext_resource type="Script" uid="uid://cxxyyq1fx3ud5" path="res://src/UI/InstallManager.cs" id="1_yefnx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_emfur"]
 font_size = 20
