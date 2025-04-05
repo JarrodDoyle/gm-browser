@@ -9,11 +9,11 @@ public class World
     public World()
     {
         Sectors = new List<List<Vector3>>();
-        Sobs = new List<Sob>();
+        Sobs = new List<Object>();
         Unknowns = new List<string>();
     }
 
-    public World(List<List<Vector3>> sectors, List<Sob> sobs, List<string> unknowns)
+    public World(List<List<Vector3>> sectors, List<Object> sobs, List<string> unknowns)
     {
         Sectors = sectors;
         Sobs = sobs;
@@ -22,7 +22,7 @@ public class World
 
     public List<List<Vector3>> Sectors { get; }
 
-    public List<Sob> Sobs { get; }
+    public List<Object> Sobs { get; }
     public List<string> Unknowns { get; }
 
     public void AddToMesh(Dictionary<string, MeshSurfaceData> surfaceDataMap)

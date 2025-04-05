@@ -32,9 +32,9 @@ public class Polygon
     }
 }
 
-public class Sob
+public class Object
 {
-    public Sob(List<Vector3> vertices, List<Polygon> polygons, List<string> unknowns)
+    public Object(List<Vector3> vertices, List<Polygon> polygons, List<string> unknowns)
     {
         Vertices = vertices;
         Polygons = polygons;

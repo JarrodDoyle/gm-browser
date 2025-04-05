@@ -6,7 +6,7 @@ namespace GME.IO;
 
 public static class ObjectParser
 {
-    public static Sob Read(TokenReader reader)
+    public static Object Read(TokenReader reader)
     {
         var importScale = EditorContext.Instance.ImportScale;
 
@@ -58,10 +58,10 @@ public static class ObjectParser
             });
         }
 
-        return new Sob(vertices, polygons, unknowns);
+        return new Object(vertices, polygons, unknowns);
     }
 
-    public static void Write(TokenWriter writer, Sob gmObject)
+    public static void Write(TokenWriter writer, Object gmObject)
     {
         var unknowns = new Queue<string>(gmObject.Unknowns);
 

@@ -33,7 +33,7 @@ public static class WorldParser
             sobCount += objectCount;
         }
 
-        var sobs = new List<Sob>(sobCount);
+        var sobs = new List<Object>(sobCount);
         for (var i = 0; i < sobCount; i++)
         {
             sobs.Add(ObjectParser.Read(reader));
