@@ -49,12 +49,19 @@ public readonly struct Selection : IEquatable<Selection>
 
 public partial class ObjectSelector: Node3D
 {
+    public bool CanSelect;
+
     private bool _selectObject;
     private Vector2 _selectPosition;
     
     private const float RayLength = 1000.0f;
     public override void _Input(InputEvent @event)
     {
+        if (!CanSelect)
+        {
+            return;
+        }
+
         if (@event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } eventMouseButton)
         {
             _selectObject = true;
