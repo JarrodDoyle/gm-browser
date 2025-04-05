@@ -4,11 +4,6 @@ using Godot;
 
 namespace GME.GM;
 
-public struct Sector
-{
-    // object offsets
-}
-
 public class World
 {
     public World()
